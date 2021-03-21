@@ -1,4 +1,4 @@
-# vue timer
+# vue-timer
 
 ## Project setup
 ```
