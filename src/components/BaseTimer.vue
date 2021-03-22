@@ -12,14 +12,21 @@
     </svg>
     <span class="base-timer__label">
       <!-- remaining time label  -->
+      <p>time</p>
     </span>
   </div>
 </template>
 
 <style lang="scss" scoped>
 /* set the container height and width */
+#timer-container {
+  justify-content: center;
+}
+
 .base-timer {
-  position: relative;
+  // always use display block/margin auto to center SVG images
+  display: block;
+  margin: auto;
   width: 300px;
   height: 300px;
 
