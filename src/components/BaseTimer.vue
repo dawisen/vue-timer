@@ -12,7 +12,7 @@
     </svg>
     <span class="base-timer__label">
       <!-- remaining time label  -->
-      <p>time</p>
+      {{formattedTimeLeft}}
     </span>
   </div>
 </template>
@@ -40,6 +40,19 @@
     stroke-width: 7px;
     stroke: grey;
   }
+  &__label {
+    position: absolute;
+    // height and width need to be the same as the parent container's
+    width: 300px;
+    height: 300px;
+    // align label to the top
+    top: 0;
+    //create flexbox to center the content
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+  }
 }
 </style>
 
@@ -49,19 +62,27 @@
       formattedTimeLeft() {
       const timeLeft = this.timeLeft
       // The largest round integer less than or equal 
-         to the result of time divided being by 60.
+      //   to the result of time divided being by 60.
       const minutes = Math.floor(timeLeft / 60)
       // Seconds are the remainder of the time divided
-         by 60 (modulus operator)
+      //   by 60 (modulus operator)
       let seconds = timeLeft % 60
       // If the value of seconds is less than 10,
-         then display seconds with a leading zero
+      //   then display seconds with a leading zero
       if (seconds < 10) {
         seconds = `0${seconds}`
       }
       // The output in MM:SS format
       return `${minutes}:${seconds}`
       }
+    },
+
+    props: {
+    timeLeft: {
+      type: Number,
+      required: true
     }
+  }
+
   }
 </script>
