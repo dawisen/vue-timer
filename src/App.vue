@@ -1,6 +1,5 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <BaseTimer />
+  <BaseTimer :time-left="timeLeft" />
 </template>
 
 <script>
@@ -10,6 +9,17 @@ export default {
   name: 'App',
   components: {
     BaseTimer
+  },
+  data() {
+    return {
+      timeLimit: 20,
+      timePassed: 0
+    }
+  },
+  computed: {
+    timeLeft() {
+      return this.timeLimit - this.timePassed
+    }
   }
 }
 </script>
@@ -21,6 +31,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  /* margin-top: 60px; */
 }
 </style>
