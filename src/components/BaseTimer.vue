@@ -9,6 +9,7 @@
       <g class="base-timer__circle">
         <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45" />
         <path
+          :stroke-dasharray="circleDasharray"
           class="base-timer__path-remaining"
           d="
             M 50, 50
@@ -62,7 +63,7 @@
     justify-content: center;
     font-size: 5rem;
   }
-   &__path-remaining {
+  &__path-remaining {
     /* same width as gray ring */
     stroke-width: 7px;
     /* Rounds the line endings to create a seamless circle */
@@ -74,6 +75,7 @@
     transition: 1s linear all;
     /* Allows the ring to change color when the color value updates */
     stroke: rgb(65, 184, 131); // green
+    fill-rule: nonzero;
   }
   &__svg {
     /* Flips the svg and makes the animation to move left-to-right */
@@ -83,8 +85,19 @@
 </style>
 
 <script>
+const FULL_DASH_ARRAY = 283;
+const TIME_LIMIT = 20;
 export default {
+  data() {
+    return {
+      timePassed: 0,
+      timerInterval: null,
+    };
+  },
   computed: {
+    timeLeft() {
+      return TIME_LIMIT - this.timePassed;
+    },
     formattedTimeLeft() {
       const timeLeft = this.timeLeft;
       // The largest round integer less than or equal
@@ -101,13 +114,34 @@ export default {
       // The output in MM:SS format
       return `${minutes}:${seconds}`;
     },
-  },
 
-  props: {
-    timeLeft: {
-      type: Number,
-      required: true,
+    // Update the dasharray value as time passes, starting with 283
+    circleDasharray() {
+      return `${(this.timeFraction * FULL_DASH_ARRAY).toFixed(0)} 283`;
     },
+    timeFraction() {
+      const rawTimeFraction = this.timeLeft / TIME_LIMIT;
+      return rawTimeFraction - (1 / TIME_LIMIT) * (1 - rawTimeFraction);
+    },
+  },
+  methods: {
+    onTimesUp() {
+      clearInterval(this.timerInterval);
+    },
+    startTimer() {
+      this.timerInterval = setInterval(() => (this.timePassed += 1), 1000);
+    },
+  },
+  watch: {
+    timeLeft(newValue) {
+      if (newValue === 0) {
+        this.onTimesUp();
+      }
+    },
+  },
+  mounted() {
+    this.startTimer();
+    console.log("timer mounted!");
   },
 };
 </script>
