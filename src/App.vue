@@ -4,7 +4,7 @@
 
 <script>
 import BaseTimer from './components/BaseTimer'
-
+const TIME_LIMIT = 20;
 export default {
   name: 'App',
   components: {
@@ -12,13 +12,22 @@ export default {
   },
   data() {
     return {
-      timeLimit: 20,
-      timePassed: 0
+      timePassed: 0,
+      timerInterval: null
     }
+  },
+  methods: {
+      startTimer() {
+      this.timerInterval = setInterval(() => (this.timePassed += 1), 1000);
+    }
+  },
+  mounted() {
+    this.startTimer();
+    console.log('timer mounted!')
   },
   computed: {
     timeLeft() {
-      return this.timeLimit - this.timePassed
+      return TIME_LIMIT - this.timePassed;
     }
   }
 }
