@@ -7,12 +7,21 @@
       xmlns="http://www.w3.org/2000/svg"
     >
       <g class="base-timer__circle">
-        <circle class="base-timer__path-elapsed" cx="50" cy="50" r="46.5" />
+        <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45" />
+        <path
+          class="base-timer__path-remaining"
+          d="
+            M 50, 50
+            m -45, 0
+            a 45,45 0 1,0 90,0
+            a 45,45 0 1,0 -90,0
+          "
+        ></path>
       </g>
     </svg>
     <span class="base-timer__label">
       <!-- remaining time label  -->
-      {{formattedTimeLeft}}
+      {{ formattedTimeLeft }}
     </span>
   </div>
 </template>
@@ -53,36 +62,52 @@
     justify-content: center;
     font-size: 5rem;
   }
+   &__path-remaining {
+    /* same width as gray ring */
+    stroke-width: 7px;
+    /* Rounds the line endings to create a seamless circle */
+    stroke-linecap: round;
+    /* Makes sure the animation starts at the top of the circle */
+    transform: rotate(90deg);
+    transform-origin: center;
+    /* One second aligns with the speed of the countdown timer */
+    transition: 1s linear all;
+    /* Allows the ring to change color when the color value updates */
+    stroke: rgb(65, 184, 131); // green
+  }
+  &__svg {
+    /* Flips the svg and makes the animation to move left-to-right */
+    transform: scaleX(-1);
+  }
 }
 </style>
 
 <script>
-  export default {
-    computed: {
-      formattedTimeLeft() {
-      const timeLeft = this.timeLeft
-      // The largest round integer less than or equal 
+export default {
+  computed: {
+    formattedTimeLeft() {
+      const timeLeft = this.timeLeft;
+      // The largest round integer less than or equal
       //   to the result of time divided being by 60.
-      const minutes = Math.floor(timeLeft / 60)
+      const minutes = Math.floor(timeLeft / 60);
       // Seconds are the remainder of the time divided
       //   by 60 (modulus operator)
-      let seconds = timeLeft % 60
+      let seconds = timeLeft % 60;
       // If the value of seconds is less than 10,
       //   then display seconds with a leading zero
       if (seconds < 10) {
-        seconds = `0${seconds}`
+        seconds = `0${seconds}`;
       }
       // The output in MM:SS format
-      return `${minutes}:${seconds}`
-      }
+      return `${minutes}:${seconds}`;
     },
+  },
 
-    props: {
+  props: {
     timeLeft: {
       type: Number,
-      required: true
-    }
-  }
-
-  }
+      required: true,
+    },
+  },
+};
 </script>
