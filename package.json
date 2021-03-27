@@ -1,5 +1,6 @@
 {
   "name": "vue-timer",
+  "homepage": "https://dawisen.github.io/vue-timer/",
   "version": "0.1.0",
   "private": true,
   "scripts": {
