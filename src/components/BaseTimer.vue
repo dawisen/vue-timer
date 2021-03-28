@@ -94,6 +94,7 @@ export default {
       timerInterval: null,
     };
   },
+
   computed: {
     timeLeft() {
       return TIME_LIMIT - this.timePassed;
@@ -137,7 +138,19 @@ export default {
           threshold: this.alertThreshold
         }
       }
+    },
+    remainingPathColor() {
+       const { alert, warning, info } = this.colorCodes;
+       if (this.timeLeft <= alert.threshold) {
+         return alert.color;
+       } else if (this.timeLeft <= warning.threshold) {
+         return warning.color;
+       } else {
+         return info.color;
+       }
+    }
   },
+
   methods: {
     onTimesUp() {
       clearInterval(this.timerInterval);
@@ -146,6 +159,7 @@ export default {
       this.timerInterval = setInterval(() => (this.timePassed += 1), 1000);
     },
   },
+
   watch: {
     timeLeft(newValue) {
       if (newValue === 0) {
@@ -153,10 +167,12 @@ export default {
       }
     },
   },
+
   mounted() {
     this.startTimer();
     console.log("timer mounted!");
   },
+
    props: {
     alertThreshold: {
       type: Number,
