@@ -10,6 +10,7 @@
         <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45" />
         <path
           :stroke-dasharray="circleDasharray"
+          :class="remainingPathColor"
           class="base-timer__path-remaining"
           d="
             M 50, 50
@@ -70,28 +71,28 @@ export default {
     colorCodes() {
       return {
         info: {
-          color: "green"
+          color: "green",
         },
         warning: {
           color: "orange",
-          threshold: this.warningThreshold
+          threshold: this.warningThreshold,
         },
         alert: {
           color: "red",
-          threshold: this.alertThreshold
-        }
-      }
+          threshold: this.alertThreshold,
+        },
+      };
     },
     remainingPathColor() {
-       const { alert, warning, info } = this.colorCodes;
-       if (this.timeLeft <= alert.threshold) {
-         return alert.color;
-       } else if (this.timeLeft <= warning.threshold) {
-         return warning.color;
-       } else {
-         return info.color;
-       }
-    }
+      const { alert, warning, info } = this.colorCodes;
+      if (this.timeLeft <= alert.threshold) {
+        return alert.color;
+      } else if (this.timeLeft <= warning.threshold) {
+        return warning.color;
+      } else {
+        return info.color;
+      }
+    },
   },
 
   methods: {
@@ -116,16 +117,16 @@ export default {
     console.log("timer mounted!");
   },
 
-   props: {
+  props: {
     alertThreshold: {
       type: Number,
-      default: 5
-     },
+      default: 5,
+    },
     warningThreshold: {
       type: Number,
-      default: 10
-    }
-  }
+      default: 10,
+    },
+  },
 };
 </script>
 
@@ -178,6 +179,16 @@ export default {
     /* Allows the ring to change color when the color value updates */
     stroke: rgb(65, 184, 131); // green
     fill-rule: nonzero;
+
+    &.green {
+      color: rgb(65, 184, 131);
+    }
+    &.orange {
+      color: orange;
+    }
+    &.red {
+      color: red;
+    }
   }
   &__svg {
     /* Flips the svg and makes the animation to move left-to-right */
