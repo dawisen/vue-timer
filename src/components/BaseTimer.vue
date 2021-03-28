@@ -27,63 +27,6 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
-/* set the container height and width */
-#timer-container {
-  justify-content: center;
-}
-
-.base-timer {
-  // always use display block/margin auto to center SVG images
-  display: block;
-  margin: auto;
-  width: 300px;
-  height: 300px;
-
-  /* remove svg styling that would hide the time label */
-  &__circle {
-    fill: none;
-    stroke: none;
-  }
-  /* SVG path around circle displaying timer progress */
-  &__path-elapsed {
-    stroke-width: 7px;
-    stroke: grey;
-  }
-  &__label {
-    position: absolute;
-    // height and width need to be the same as the parent container's
-    width: 300px;
-    height: 300px;
-    // align label to the top
-    top: 0;
-    //create flexbox to center the content
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 5rem;
-  }
-  &__path-remaining {
-    /* same width as gray ring */
-    stroke-width: 7px;
-    /* Rounds the line endings to create a seamless circle */
-    stroke-linecap: round;
-    /* Makes sure the animation starts at the top of the circle */
-    transform: rotate(90deg);
-    transform-origin: center;
-    /* One second aligns with the speed of the countdown timer */
-    transition: 1s linear all;
-    /* Allows the ring to change color when the color value updates */
-    stroke: rgb(65, 184, 131); // green
-    fill-rule: nonzero;
-  }
-  &__svg {
-    /* Flips the svg and makes the animation to move left-to-right */
-    transform: scaleX(-1);
-  }
-}
-</style>
-
 <script>
 const FULL_DASH_ARRAY = 283;
 const TIME_LIMIT = 20;
@@ -185,3 +128,60 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+/* set the container height and width */
+#timer-container {
+  justify-content: center;
+}
+
+.base-timer {
+  // always use display block/margin auto to center SVG images
+  display: block;
+  margin: auto;
+  width: 300px;
+  height: 300px;
+
+  /* remove svg styling that would hide the time label */
+  &__circle {
+    fill: none;
+    stroke: none;
+  }
+  /* SVG path around circle displaying timer progress */
+  &__path-elapsed {
+    stroke-width: 7px;
+    stroke: grey;
+  }
+  &__label {
+    position: absolute;
+    // height and width need to be the same as the parent container's
+    width: 300px;
+    height: 300px;
+    // align label to the top
+    top: 0;
+    //create flexbox to center the content
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+  }
+  &__path-remaining {
+    /* same width as gray ring */
+    stroke-width: 7px;
+    /* Rounds the line endings to create a seamless circle */
+    stroke-linecap: round;
+    /* Makes sure the animation starts at the top of the circle */
+    transform: rotate(90deg);
+    transform-origin: center;
+    /* One second aligns with the speed of the countdown timer */
+    transition: 1s linear all;
+    /* Allows the ring to change color when the color value updates */
+    stroke: rgb(65, 184, 131); // green
+    fill-rule: nonzero;
+  }
+  &__svg {
+    /* Flips the svg and makes the animation to move left-to-right */
+    transform: scaleX(-1);
+  }
+}
+</style>
