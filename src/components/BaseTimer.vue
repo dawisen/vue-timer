@@ -10,8 +10,8 @@
         <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45" />
         <path
           :stroke-dasharray="circleDasharray"
-          :class="remainingPathColor"
           class="base-timer__path-remaining"
+          :class="remainingPathColor"
           d="
             M 50, 50
             m -45, 0
@@ -31,6 +31,22 @@
 <script>
 const FULL_DASH_ARRAY = 283;
 const TIME_LIMIT = 20;
+const WARNING_THRESHOLD = 10;
+const ALERT_THRESHOLD = 5;
+
+const COLOR_CODES = {
+  info: {
+    color: "green"
+  },
+  warning: {
+    color: "orange",
+    threshold: WARNING_THRESHOLD
+  },
+  alert: {
+    color: "red",
+    threshold: ALERT_THRESHOLD
+  }
+};
 export default {
   data() {
     return {
@@ -68,23 +84,8 @@ export default {
       const rawTimeFraction = this.timeLeft / TIME_LIMIT;
       return rawTimeFraction - (1 / TIME_LIMIT) * (1 - rawTimeFraction);
     },
-    colorCodes() {
-      return {
-        info: {
-          color: "green",
-        },
-        warning: {
-          color: "orange",
-          threshold: this.warningThreshold,
-        },
-        alert: {
-          color: "red",
-          threshold: this.alertThreshold,
-        },
-      };
-    },
     remainingPathColor() {
-      const { alert, warning, info } = this.colorCodes;
+      const { alert, warning, info } = COLOR_CODES;
       if (this.timeLeft <= alert.threshold) {
         return alert.color;
       } else if (this.timeLeft <= warning.threshold) {
@@ -115,17 +116,6 @@ export default {
   mounted() {
     this.startTimer();
     console.log("timer mounted!");
-  },
-
-  props: {
-    alertThreshold: {
-      type: Number,
-      default: 5,
-    },
-    warningThreshold: {
-      type: Number,
-      default: 10,
-    },
   },
 };
 </script>
@@ -177,7 +167,7 @@ export default {
     /* One second aligns with the speed of the countdown timer */
     transition: 1s linear all;
     /* Allows the ring to change color when the color value updates */
-    stroke: rgb(65, 184, 131); // green
+    stroke: currentColor;
     fill-rule: nonzero;
 
     &.green {
