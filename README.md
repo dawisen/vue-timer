@@ -1,4 +1,6 @@
-# vue-timer
+# Countdown timer
+
+## [Link to Demo Page](https://dawisen.github.io/vue-timer/)
 
 ## Project setup
 ```
