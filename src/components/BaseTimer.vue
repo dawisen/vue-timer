@@ -143,5 +143,15 @@ export default {
     this.startTimer();
     console.log("timer mounted!");
   },
+   props: {
+    alertThreshold: {
+      type: Number,
+      default: 5
+     },
+    warningThreshold: {
+      type: Number,
+      default: 10
+    }
+  }
 };
 </script>
