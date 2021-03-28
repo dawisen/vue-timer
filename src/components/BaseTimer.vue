@@ -123,6 +123,20 @@ export default {
       const rawTimeFraction = this.timeLeft / TIME_LIMIT;
       return rawTimeFraction - (1 / TIME_LIMIT) * (1 - rawTimeFraction);
     },
+    colorCodes() {
+      return {
+        info: {
+          color: "green"
+        },
+        warning: {
+          color: "orange",
+          threshold: this.warningThreshold
+        },
+        alert: {
+          color: "red",
+          threshold: this.alertThreshold
+        }
+      }
   },
   methods: {
     onTimesUp() {
